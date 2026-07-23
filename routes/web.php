@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +23,10 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin-only', function () {
         return 'Welcome Admin! This page is Admin-only.';
     });
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('customers', CustomerController::class)->except(['show']);
 });
 
 Route::middleware('auth')->group(function () {
