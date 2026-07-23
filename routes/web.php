@@ -4,6 +4,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MechanicController;
+use App\Http\Controllers\PartController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('customers', CustomerController::class)->except(['show']);
     Route::resource('vehicles', VehicleController::class)->except(['show']);
     Route::resource('mechanics', MechanicController::class)->except(['show']);
+    Route::resource('parts', PartController::class)->except(['show']);
 
 });
 
