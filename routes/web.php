@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JobCardController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\VehicleController;
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('parts', PartController::class)->except(['show']);
     Route::resource('bookings', BookingController::class)->except(['show']);
     Route::resource('job-cards', JobCardController::class)->except(['show']);
+    Route::resource('invoices', InvoiceController::class)->except(['show']);
 });
 
 Route::middleware('auth')->group(function () {
