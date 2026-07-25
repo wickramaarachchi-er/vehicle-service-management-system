@@ -1,5 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, Link } from '@inertiajs/react';
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function Create({ auth, vehicles }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -9,9 +11,41 @@ export default function Create({ auth, vehicles }) {
         complaint: '',
     });
 
+    const [aiLoading, setAiLoading] = useState(false);
+    const [aiResult, setAiResult] = useState(null);
+    const [aiError, setAiError] = useState(null);
+
+    const getAiSuggestions = async () => {
+        if (!data.complaint || data.complaint.trim().length < 5) {
+            setAiError('Please enter a more detailed complaint first.');
+            return;
+        }
+
+        setAiLoading(true);
+        setAiError(null);
+        setAiResult(null);
+
+        try {
+            const response = await axios.post(route('ai.analyze'), {
+                complaint: data.complaint,
+            });
+            setAiResult(response.data);
+        } catch (error) {
+            setAiError('Could not get AI suggestions right now. You can still proceed manually.');
+        } finally {
+            setAiLoading(false);
+        }
+    };
+
     const submit = (e) => {
         e.preventDefault();
         post(route('bookings.store'));
+    };
+
+    const urgencyColors = {
+        Low: 'bg-green-100 text-green-800',
+        Medium: 'bg-yellow-100 text-yellow-800',
+        High: 'bg-red-100 text-red-800',
     };
 
     return (
@@ -76,6 +110,48 @@ export default function Create({ auth, vehicles }) {
                                     placeholder="e.g. Car makes a clicking noise when turning"
                                 />
                                 {errors.complaint && <div className="text-red-600 text-sm mt-1">{errors.complaint}</div>}
+
+                                <button
+                                    type="button"
+                                    onClick={getAiSuggestions}
+                                    disabled={aiLoading}
+                                    className="mt-2 text-sm bg-purple-600 text-white px-3 py-1.5 rounded-md hover:bg-purple-700 disabled:opacity-50"
+                                >
+                                    {aiLoading ? 'Analyzing...' : '✨ Get AI Suggestions'}
+                                </button>
+
+                                {aiError && (
+                                    <p className="text-sm text-red-600 mt-2">{aiError}</p>
+                                )}
+
+                                {aiResult && (
+                                    <div className="mt-3 p-4 bg-purple-50 border border-purple-200 rounded-md space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <h4 className="text-sm font-semibold text-purple-800">AI Analysis</h4>
+                                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${urgencyColors[aiResult.urgency]}`}>
+                                                {aiResult.urgency} Urgency
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs font-medium text-gray-600">Possible Issues:</p>
+                                            <ul className="list-disc list-inside text-sm text-gray-700">
+                                                {aiResult.issues.map((issue, i) => (
+                                                    <li key={i}>{issue}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs font-medium text-gray-600">Recommended Services:</p>
+                                            <ul className="list-disc list-inside text-sm text-gray-700">
+                                                {aiResult.recommended_services.map((service, i) => (
+                                                    <li key={i}>{service}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="flex justify-end gap-2">

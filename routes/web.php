@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AiAdvisorController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JobCardController;
 use App\Http\Controllers\BookingController;
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('bookings', BookingController::class)->except(['show']);
     Route::resource('job-cards', JobCardController::class)->except(['show']);
     Route::resource('invoices', InvoiceController::class)->except(['show']);
+    Route::post('/ai/analyze-complaint', [AiAdvisorController::class, 'analyze'])->name('ai.analyze');
 });
 
 Route::middleware('auth')->group(function () {
