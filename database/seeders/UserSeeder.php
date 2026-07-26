@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
         $admin = User::firstOrCreate(
             ['email' => 'admin@vehicleservice.com'],
             [
-                'name' => 'Admin User',
-                'password' => bcrypt('password123'),
+                'name' => 'Kasun Perera',
+                'password' => bcrypt('admin123'),
             ]
         );
         $admin->assignRole('Admin');
@@ -22,20 +22,19 @@ class UserSeeder extends Seeder
         $advisor = User::firstOrCreate(
             ['email' => 'advisor@vehicleservice.com'],
             [
-                'name' => 'Service Advisor User',
-                'password' => bcrypt('password123'),
+                'name' => 'Nadeesha Fernando',
+                'password' => bcrypt('advisor123'),
             ]
         );
         $advisor->assignRole('Service Advisor');
 
-        // Link mechanic user to an actual Mechanic record
         $mechanicRecord = Mechanic::first();
 
         $mechanic = User::firstOrCreate(
             ['email' => 'mechanic@vehicleservice.com'],
             [
-                'name' => 'Mechanic User',
-                'password' => bcrypt('password123'),
+                'name' => 'Chamara Silva',
+                'password' => bcrypt('mechanic123'),
                 'mechanic_id' => $mechanicRecord?->id,
             ]
         );

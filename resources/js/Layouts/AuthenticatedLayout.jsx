@@ -67,22 +67,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     ))}
                 </nav>
 
-                <div className="px-3 py-4 border-t border-white/10">
-                    <Link
-                        href={route('profile.edit')}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-indigo-100 hover:bg-white/10 hover:text-white transition"
-                    >
-                        👤 Profile
-                    </Link>
-                    <Link
-                        href={route('logout')}
-                        method="post"
-                        as="button"
-                        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-indigo-100 hover:bg-white/10 hover:text-white transition"
-                    >
-                        🚪 Log Out
-                    </Link>
-                </div>
+
             </aside>
 
             {/* Mobile sidebar toggle */}
@@ -119,13 +104,47 @@ export default function AuthenticatedLayout({ user, header, children }) {
             <div className="flex-1 flex flex-col md:pl-0 pt-14 md:pt-0">
                 <header className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
                     <div>{header}</div>
-                    <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500">Signed in as</span>
-                        <span className="text-sm font-semibold text-gray-800">{user.name}</span>
-                        <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full font-medium">
-                            {userRoles[0]}
-                        </span>
-                    </div>
+                    <div className="relative group">
+    <button className="flex items-center gap-3 pl-2 pr-3 py-1.5 rounded-full hover:bg-gray-50 transition">
+        <div className="w-9 h-9 rounded-full overflow-hidden shadow-sm flex-shrink-0">
+    {user.avatar ? (
+        <img
+            src={`/storage/${user.avatar}`}
+            alt={user.name}
+            className="w-full h-full object-cover"
+        />
+    ) : (
+        <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+            {user.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()}
+        </div>
+    )}
+</div>
+        <div className="text-left hidden sm:block">
+            <p className="text-sm font-semibold text-gray-800 leading-tight">{user.name}</p>
+            <p className="text-xs text-indigo-600 font-medium leading-tight">{userRoles[0]}</p>
+        </div>
+        <svg className="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clipRule="evenodd" />
+        </svg>
+    </button>
+
+    <div className="absolute right-0 mt-1 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+        <Link
+            href={route('profile.edit')}
+            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+        >
+            👤 Profile
+        </Link>
+        <Link
+            href={route('logout')}
+            method="post"
+            as="button"
+            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 text-left"
+        >
+            🚪 Log Out
+        </Link>
+    </div>
+</div>
                 </header>
 
                 <main className="flex-1">{children}</main>
