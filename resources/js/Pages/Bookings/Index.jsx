@@ -26,7 +26,6 @@ export default function Index({ auth, bookings, filters }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Bookings</h2>}
         >
             <Head title="Bookings" />
 

@@ -26,7 +26,6 @@ export default function Index({ auth, jobCards, filters }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Job Cards</h2>}
         >
             <Head title="Job Cards" />
 

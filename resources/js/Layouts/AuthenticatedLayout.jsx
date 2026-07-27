@@ -44,7 +44,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
         <div className="min-h-screen bg-gray-50 flex">
 
             {/* Sidebar */}
-            <aside className="hidden md:flex md:flex-col w-64 bg-gradient-to-b from-indigo-700 via-indigo-600 to-purple-700 text-white">
+            <aside className="hidden md:flex md:flex-col w-64 h-screen sticky top-0 bg-gradient-to-b from-indigo-700 via-indigo-600 to-purple-700 text-white">
                 <div className="px-6 py-6 border-b border-white/10">
                     <h1 className="text-lg font-bold tracking-tight">🚗 ServiceHub</h1>
                     <p className="text-xs text-indigo-200 mt-0.5">Vehicle Service Management</p>
