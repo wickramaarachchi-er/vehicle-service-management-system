@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             ['email' => 'mechanic@vehicleservice.com'],
             [
                 'name' => 'Chamara Silva',
-                'password' => bcrypt('mechanic123'),
+                'password' => bcrypt('mechanic@123'),
                 'mechanic_id' => $mechanicRecord?->id,
             ]
         );

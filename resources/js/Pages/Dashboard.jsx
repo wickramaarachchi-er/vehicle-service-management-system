@@ -88,7 +88,7 @@ export default function Dashboard({
 
                         {/* Revenue Card */}
                         <div className={revenueCardClass} style={{ animationDelay: '0.1s' }}>
-                            <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                            <div className="absolute top-0 right-0 p-3 opacity-15 group-hover:scale-110 transition-transform duration-500">
                                 <svg className="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
                             <div className="relative z-10 flex flex-col h-full justify-between">
@@ -114,7 +114,7 @@ export default function Dashboard({
 
                         {/* Bookings Card */}
                         <div className={`${cardClass} border-l-4 border-l-indigo-500`} style={{ animationDelay: '0.2s' }}>
-                            <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:scale-110 transition-transform duration-500">
+                            <div className="absolute top-0 right-0 p-3 opacity-15 group-hover:scale-110 transition-transform duration-500">
                                 <svg className="w-16 h-16 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z"/></svg>
                             </div>
                             <div className="relative z-10 flex flex-col h-full">
@@ -134,7 +134,7 @@ export default function Dashboard({
 
                         {/* Active Jobs Card */}
                         <div className={`${cardClass} border-l-4 border-l-blue-500`} style={{ animationDelay: '0.3s' }}>
-                            <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:scale-110 transition-transform duration-500">
+                            <div className="absolute top-0 right-0 p-3 opacity-15 group-hover:scale-110 transition-transform duration-500">
                                 <svg className="w-16 h-16 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M13.78 15.3l-1.06 1.06a1.5 1.5 0 0 1-2.12 0l-5.65-5.65a1.5 1.5 0 0 1 0-2.12l1.06-1.06a.5.5 0 0 1 .71 0l4.24 4.24a.5.5 0 0 1 0 .71l-.71.71a1.5 1.5 0 0 0 0 2.12l3.53 3.53a.5.5 0 0 1 0 .71z"/></svg>
                             </div>
                             <div className="relative z-10 flex flex-col h-full">
@@ -155,7 +155,7 @@ export default function Dashboard({
 
                         {/* Low Stock Card */}
                         <div className={`${cardClass} border-l-4 border-l-red-500`} style={{ animationDelay: '0.4s' }}>
-                            <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:scale-110 transition-transform duration-500">
+                            <div className="absolute top-0 right-0 p-3 opacity-15 group-hover:scale-110 transition-transform duration-500">
                                 <svg className="w-16 h-16 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
                             </div>
                             <div className="relative z-10 flex flex-col h-full">
