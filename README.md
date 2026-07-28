@@ -1,58 +1,213 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#  ServiceHub - Vehicle Service Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack web application for managing daily operations of a vehicle service center — customer records, vehicle tracking, service bookings, mechanic assignments, spare parts inventory, job tracking, billing, and an AI-powered service advisor.
 
-## About Laravel
+Built as a 7-day intern project demonstrating role-based access control, Laravel best practices, and AI integration.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Screenshots
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Login
+![Login Page](docs/screenshots/login.png)
 
-## Learning Laravel
+### Dashboard
+![Dashboard 1](docs/screenshots/dashboard1.png)
+![Dashboard 2](docs/screenshots/dashboard2.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Customer Management
+![Customers](docs/screenshots/customers.png)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### AI Service Advisor
+![AI Suggestions](docs/screenshots/ai-suggestions.png)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Job Cards
+![Job Cards](docs/screenshots/job-cards.png)
 
-## Agentic Development
+### Invoices & Billing
+![Invoices](docs/screenshots/invoices.png)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
+## Features
+
+- **Authentication & Role-Based Access Control** — Admin, Service Advisor, and Mechanic roles with distinct permissions, powered by Spatie Laravel Permission
+- **Customer Management** — Full CRUD with search and pagination
+- **Vehicle Management** — Full CRUD linked to customers, with eager-loaded relationships
+- **Mechanic Management** — Staff records with specialization tracking (Admin only)
+- **Parts Inventory** — Stock tracking with automatic low-stock detection
+- **Service Booking** — Appointment scheduling with double-booking prevention
+- **Job Cards** — Mechanic and parts assignment, status workflow (Pending → In Progress → Completed → Cancelled), and **automatic stock deduction** on job completion (wrapped in a database transaction)
+- **Billing & Invoicing** — Auto-calculated totals (labor + parts), unique invoice number generation, payment status tracking
+- **Dashboard** — Live stats: today's bookings, active jobs, low stock alerts, daily revenue, with interactive charts
+- ** AI Service Advisor** — Converts natural language customer complaints into suggested issues, recommended services, and urgency level, powered by the Google Gemini API
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Laravel 13 |
+| Frontend | Inertia.js + React |
+| Styling | Tailwind CSS |
+| Database | MySQL |
+| Authorization | Spatie Laravel Permission |
+| AI | Google Gemini API |
+| Charts | Recharts |
+
+---
+
+## Architecture
+
+The project follows Laravel best practices with clear separation of concerns:
+
+- **Form Requests** handle all input validation
+- **Service Classes** contain business logic (kept out of controllers)
+- **Policies** enforce role-based authorization at the model level
+- **Database Transactions** protect critical operations (stock deduction, invoice generation)
+- **Eager Loading** used throughout to prevent N+1 query issues
+
+---
+
+## Setup Instructions
+
+### Prerequisites
+
+- PHP 8.2+
+- Composer
+- Node.js 18+ & npm
+- MySQL 8.0+
+- Git
+
+### Installation
+
+1. **Clone the repository**
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/wickramaarachchi-er/vehicle-service-management-system.git
+cd vehicle-service-management-system
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. **Install PHP dependencies**
+```bash
+composer install
+```
 
-## Contributing
+3. **Install JavaScript dependencies**
+```bash
+npm install --legacy-peer-deps
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Set up environment file**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Code of Conduct
+5. **Configure your database** in `.env`:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **Add your Gemini API key** in `.env` (required for the AI Service Advisor feature):
 
-## Security Vulnerabilities
+Get a free key at [Google AI Studio](https://aistudio.google.com).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. **Create the database**
+```sql
+CREATE DATABASE vehicle_service_system;
+```
 
-## License
+8. **Run migrations and seed sample data**
+```bash
+php artisan migrate:fresh --seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+9. **Create the storage symlink** (needed for profile avatar uploads)
+```bash
+php artisan storage:link
+```
+
+10. **Build frontend assets and start the servers**
+
+Terminal 1:
+```bash
+npm run dev
+```
+
+Terminal 2:
+```bash
+php artisan serve
+```
+
+11. Visit **http://127.0.0.1:8000**
+
+---
+
+## Test Credentials
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@vehicleservice.com | admin123 |
+| Service Advisor | advisor@vehicleservice.com | advisor123 |
+| Mechanic | mechanic@vehicleservice.com | mechanic123 |
+
+---
+
+## Role Permissions
+
+| Module | Admin | Service Advisor | Mechanic |
+|---|---|---|---|
+| Dashboard | Have | Have | Have |
+| Customers | Full CRUD | Create/Edit | No |
+| Vehicles | Full CRUD | Create/Edit | No |
+| Mechanics | Full CRUD | View only | No |
+| Parts | Full CRUD | Create/Edit/View | View only |
+| Bookings | Full CRUD | Create/Edit | No |
+| Job Cards | Full CRUD (any) | Create/Edit (any) | Edit own assigned only |
+| Invoices | Full CRUD | Create/Edit | No |
+
+---
+
+## Database Schema
+
+Core entities and relationships:
+
+- **Customer** -> has many **Vehicles**
+- **Vehicle** -> belongs to Customer, has many **Bookings**
+- **Booking** -> belongs to Vehicle & Customer, has one **Job Card**
+- **Job Card** -> belongs to Booking, belongs to **Mechanic**, has many **Parts** (via pivot), has one **Invoice**
+- **Part** -> tracks stock quantity and low-stock threshold
+- **Invoice** -> belongs to Job Card, auto-calculates labor + parts totals
+
+---
+
+## AI Feature: Service Advisor
+
+Located on the Booking creation page. A Service Advisor types a customer's complaint in natural language (e.g., *"My car makes a clicking noise when turning"*), clicks **"Get AI Suggestions"**, and the system returns:
+- Possible issues
+- Recommended services
+- Urgency level (Low / Medium / High)
+
+Powered by the Google Gemini API (`gemini-flash-latest` model), with graceful fallback handling if the API is unavailable.
+
+---
+
+##  Project Structure
+
+---
+
+##  Notes
+
+- All database-critical operations (stock deduction, invoice generation) are wrapped in `DB::transaction()` for data integrity
+- Double-booking prevention is enforced at the validation layer using a scoped `Rule::unique` check
+- Low stock detection uses `whereColumn('stock_quantity', '<=', 'low_stock_threshold')` and powers both the Dashboard and Parts module
+
+---
+
+## Demo Video
+
+[Link to be added]
+
+---
+
+## Author
+
+Erand Wickramaarachchi - 7-Day Intern Assignment
