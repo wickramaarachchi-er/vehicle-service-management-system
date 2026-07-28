@@ -1,6 +1,6 @@
 #  ServiceHub - Vehicle Service Management System
 
-A full-stack web application for managing daily operations of a vehicle service center — customer records, vehicle tracking, service bookings, mechanic assignments, spare parts inventory, job tracking, billing, and an AI-powered service advisor.
+A full-stack web application for managing daily operations of a vehicle service center - customer records, vehicle tracking, service bookings, mechanic assignments, spare parts inventory, job tracking, billing, and an AI-powered service advisor.
 
 Built as a 7-day intern project demonstrating role-based access control, Laravel best practices, and AI integration.
 
@@ -9,38 +9,38 @@ Built as a 7-day intern project demonstrating role-based access control, Laravel
 ## Screenshots
 
 ### Login
-![Login Page](docs/screenshots/login.png)
+![Login Page](docs/screenshots/login.jpg)
 
 ### Dashboard
-![Dashboard 1](docs/screenshots/dashboard1.png)
-![Dashboard 2](docs/screenshots/dashboard2.png)
+![Dashboard 1](docs/screenshots/dashboard1.jpg)
+![Dashboard 2](docs/screenshots/dashboard2.jpg)
 
 ### Customer Management
-![Customers](docs/screenshots/customers.png)
+![Customers](docs/screenshots/customers.jpg)
 
 ### AI Service Advisor
-![AI Suggestions](docs/screenshots/ai-suggestions.png)
+![AI Suggestions](docs/screenshots/ai-suggestions.jpg)
 
 ### Job Cards
-![Job Cards](docs/screenshots/job-cards.png)
+![Job Cards](docs/screenshots/job-cards.jpg)
 
 ### Invoices & Billing
-![Invoices](docs/screenshots/invoices.png)
+![Invoices](docs/screenshots/invoices.jpg)
 
 ---
 
 ## Features
 
-- **Authentication & Role-Based Access Control** — Admin, Service Advisor, and Mechanic roles with distinct permissions, powered by Spatie Laravel Permission
-- **Customer Management** — Full CRUD with search and pagination
-- **Vehicle Management** — Full CRUD linked to customers, with eager-loaded relationships
-- **Mechanic Management** — Staff records with specialization tracking (Admin only)
-- **Parts Inventory** — Stock tracking with automatic low-stock detection
-- **Service Booking** — Appointment scheduling with double-booking prevention
-- **Job Cards** — Mechanic and parts assignment, status workflow (Pending → In Progress → Completed → Cancelled), and **automatic stock deduction** on job completion (wrapped in a database transaction)
-- **Billing & Invoicing** — Auto-calculated totals (labor + parts), unique invoice number generation, payment status tracking
-- **Dashboard** — Live stats: today's bookings, active jobs, low stock alerts, daily revenue, with interactive charts
-- ** AI Service Advisor** — Converts natural language customer complaints into suggested issues, recommended services, and urgency level, powered by the Google Gemini API
+- **Authentication & Role-Based Access Control** - Admin, Service Advisor, and Mechanic roles with distinct permissions, powered by Spatie Laravel Permission
+- **Customer Management** - Full CRUD with search and pagination
+- **Vehicle Management** - Full CRUD linked to customers, with eager-loaded relationships
+- **Mechanic Management** - Staff records with specialization tracking (Admin only)
+- **Parts Inventory** - Stock tracking with automatic low-stock detection
+- **Service Booking** - Appointment scheduling with double-booking prevention
+- **Job Cards** - Mechanic and parts assignment, status workflow (Pending -> In Progress -> Completed -> Cancelled), and **automatic stock deduction** on job completion (wrapped in a database transaction)
+- **Billing & Invoicing** - Auto-calculated totals (labor + parts), unique invoice number generation, payment status tracking
+- **Dashboard** - Live stats: today's bookings, active jobs, low stock alerts, daily revenue, with interactive charts
+- ** AI Service Advisor** - Converts natural language customer complaints into suggested issues, recommended services, and urgency level, powered by the Google Gemini API
 
 ---
 
@@ -105,10 +105,16 @@ php artisan key:generate
 ```
 
 5. **Configure your database** in `.env`:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=vehicle_service_system
+DB_USERNAME=root
+DB_PASSWORD=your_password
 
 6. **Add your Gemini API key** in `.env` (required for the AI Service Advisor feature):
+GEMINI_API_KEY=your_gemini_api_key_here
 
-Get a free key at [Google AI Studio](https://aistudio.google.com).
 
 7. **Create the database**
 ```sql
@@ -191,7 +197,29 @@ Powered by the Google Gemini API (`gemini-flash-latest` model), with graceful fa
 ---
 
 ##  Project Structure
+## Project Structure
 
+```
+app/
+├── Http/
+│   ├── Controllers/       # Thin controllers, delegate to Services
+│   ├── Requests/          # Form Request validation classes
+│   └── Middleware/        # CheckRole, HandleInertiaRequests
+├── Models/                # Eloquent models with relationships
+├── Policies/               # Authorization logic per model
+├── Services/                # Business logic layer
+database/
+├── migrations/              # Schema definitions
+├── seeders/                  # Sample data generation
+├── factories/                # Model factories for realistic data
+resources/js/
+├── Layouts/                  # AuthenticatedLayout (sidebar shell)
+├── Pages/                     # Inertia page components per module
+routes/
+└── web.php                     # All application routes
+```
+
+---
 ---
 
 ##  Notes
